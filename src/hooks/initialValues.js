@@ -1,7 +1,7 @@
 const initialValues = {
-  userInfo: null,
-  token: null,
-  loading: false,
+  userInfo: "",
+  token: "",
+  loadingState: false,
 };
 
 export default initialValues;

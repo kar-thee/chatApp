@@ -4,19 +4,19 @@ import ReducerFunc from "./ReducerFunc";
 
 const useStore = () => {
   const [state, dispatch] = useReducer(ReducerFunc, initialValues, () => {
-    const token = JSON.stringify(localStorage.getItem("token"));
-    const userInfo = JSON.stringify(localStorage.getItem("userInfo"));
+    const tokenVal = JSON.parse(localStorage.getItem("token"));
+    const userInfoVal = JSON.parse(localStorage.getItem("userInfo"));
 
     return {
       ...initialValues,
-      token: token || null,
-      userInfo: userInfo || null,
+      token: tokenVal || null,
+      userInfo: userInfoVal || null,
     };
   });
 
   useEffect(() => {
-    localStorage.setItem("token", state.token);
-    localStorage.setItem("userInfo", state.userInfo);
+    localStorage.setItem("token", JSON.stringify(state.token));
+    localStorage.setItem("userInfo", JSON.stringify(state.userInfo));
   }, [state.token, state.userInfo]);
 
   return [state, dispatch];

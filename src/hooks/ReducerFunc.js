@@ -1,3 +1,5 @@
+import initialValues from "./initialValues";
+
 const ReducerFunc = (state, actionObj) => {
   switch (actionObj.type) {
     case "signin": {
@@ -6,11 +8,14 @@ const ReducerFunc = (state, actionObj) => {
         userInfo: actionObj.payLoad.user,
       };
     }
+    case "signout": {
+      return initialValues;
+    }
     case "loadingStart": {
-      return { ...state, loading: true };
+      return { ...state, loadingState: true };
     }
     case "loadingStop": {
-      return { ...state, loading: false };
+      return { ...state, loadingState: false };
     }
     default: {
       return state;
