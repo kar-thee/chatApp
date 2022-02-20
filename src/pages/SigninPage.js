@@ -85,7 +85,7 @@ const SigninPage = () => {
         type: "signin",
         payLoad: { token: response.data.token, user: response.data.user },
       });
-      navigate("/chat");
+      navigate("/chatApp");
     } else {
       //alert to try again
       toast.error(response.data.msg);

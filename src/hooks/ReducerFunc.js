@@ -17,6 +17,13 @@ const ReducerFunc = (state, actionObj) => {
     case "loadingStop": {
       return { ...state, loadingState: false };
     }
+    // for mobile view -sidebar
+    case "sidebarViewOn": {
+      return { ...state, sideBarView: true };
+    }
+    case "sidebarViewOff": {
+      return { ...state, sideBarView: false };
+    }
     default: {
       return state;
     }

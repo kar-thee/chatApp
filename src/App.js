@@ -11,25 +11,45 @@ import SignupPage from "./pages/SignupPage";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Trial from "./components/chat/chatSidebar/Trial1";
+import Trial2 from "./components/chat/chatSidebar/Trial2";
 
 const App = () => {
   return (
     <>
       <AppProvider>
         <CssBaseline />
+
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/signin" element={<SigninPage />} />
 
           <Route
-            path="/chat"
+            path="/chatApp"
             element={
               <Protected redirect={<SigninPage />}>
                 <ChatLayout />
               </Protected>
             }
-          />
+          >
+            <Route
+              path="chats"
+              element={
+                <Protected redirect={<SigninPage />}>
+                  <Trial />
+                </Protected>
+              }
+            />
+            <Route
+              path="trial2"
+              element={
+                <Protected redirect={<SigninPage />}>
+                  <Trial2 />
+                </Protected>
+              }
+            />
+          </Route>
 
           <Route path="*" element={<HomePage />} />
         </Routes>

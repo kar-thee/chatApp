@@ -1,9 +1,9 @@
-import useStateValFunc from "../hooks/useDispatchFunc";
+import useAuth from "../hooks/useAuth";
 
 const Protected = ({ children, redirect }) => {
-  const [state] = useStateValFunc();
+  const [checkAuth] = useAuth();
 
-  return state.token !== null ? children : redirect;
+  return checkAuth() ? children : redirect;
 };
 
 export default Protected;
