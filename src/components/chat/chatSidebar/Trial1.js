@@ -7,7 +7,7 @@ const Trial = () => {
   return (
     <>
       <Typography variant="h1">Hello</Typography>
-      <UserProfileImg />
+      {/* <UserProfileImg /> */}
       <MiniLoader />
     </>
   );

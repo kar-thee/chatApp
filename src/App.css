@@ -1,0 +1,20 @@
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+html[dir] .dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--white-rgb), 0.16);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--black-rgb), 0.2);
+}
+
+html[dir] .dark ::-webkit-scrollbar-track {
+  background-color: initial;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(var(--white-rgb), 0.1);
+}

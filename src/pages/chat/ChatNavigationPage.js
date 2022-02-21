@@ -15,7 +15,11 @@ const ChatNavigationPage = () => {
           minHeight: "100vh",
         }}
       >
-        <Toolbar sx={{ justifyContent: { xs: "center", lg: "initial" } }}>
+        <Toolbar
+          sx={{
+            justifyContent: { xs: "center", lg: "initial" },
+          }}
+        >
           <Stack>
             {/* NavItems Component */}
             {chatNavItems().map((navObj, i) => (

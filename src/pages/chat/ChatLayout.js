@@ -2,38 +2,31 @@ import { Grid } from "@mui/material";
 import React from "react";
 
 import useStateValFunc from "../../hooks/useStateValFunc";
-import useDispatchFunc from "../../hooks/useDispatchFunc";
+// import useDispatchFunc from "../../hooks/useDispatchFunc";
 import ChatNavigationPage from "./ChatNavigationPage";
 import ChatBoxPage from "./ChatBoxPage";
 import ChatSideBarPage from "./ChatSideBarPage";
 
 const ChatLayout = () => {
   const [{ sideBarView }] = useStateValFunc();
-  const [dispatch] = useDispatchFunc();
+  // const [dispatch] = useDispatchFunc();
 
-  // sidebarView handling in mobileview
-  const setSideBarViewOn = () => {
-    dispatch({ type: "sidebarViewOn" });
-  };
-  const setSideBarViewOff = () => {
-    dispatch({ type: "sidebarViewOff" });
-  };
-  const sidebarViewClickandler = () => {
-    sideBarView ? setSideBarViewOff() : setSideBarViewOn();
-  };
+  // // sidebarView handling in mobileview
+  // const setSideBarViewOn = () => {
+  //   dispatch({ type: "sidebarViewOn" });
+  // };
+  // const setSideBarViewOff = () => {
+  //   dispatch({ type: "sidebarViewOff" });
+  // };
+  // const sidebarViewClickandler = () => {
+  //   sideBarView ? setSideBarViewOff() : setSideBarViewOn();
+  // };
 
   return (
     <>
       <Grid container>
         {/* this will be navigationBar */}
-        <Grid
-          item
-          xs={2}
-          md={2}
-          lg={1.5}
-          onClick={() => sidebarViewClickandler()}
-          maxHeight="100vh"
-        >
+        <Grid item xs={2} md={1} lg={1.5} maxHeight="100vh">
           <ChatNavigationPage />
         </Grid>
 
@@ -55,7 +48,7 @@ const ChatLayout = () => {
           item
           xs={10}
           sm={3.5}
-          md={3}
+          md={4}
           lg={3}
           sx={{ display: { xs: sideBarView ? "unset" : "none", sm: "unset" } }}
           maxHeight="100vh"

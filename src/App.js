@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Trial from "./components/chat/chatSidebar/Trial1";
 import Trial2 from "./components/chat/chatSidebar/Trial2";
+import ChatMessages from "./components/chat/chatSidebar/Messages/ChatMessages";
 
 const App = () => {
   return (
@@ -35,7 +36,7 @@ const App = () => {
             }
           >
             <Route
-              path="chats"
+              path="trial1"
               element={
                 <Protected redirect={<SigninPage />}>
                   <Trial />
@@ -47,6 +48,14 @@ const App = () => {
               element={
                 <Protected redirect={<SigninPage />}>
                   <Trial2 />
+                </Protected>
+              }
+            />
+            <Route
+              path="chats"
+              element={
+                <Protected redirect={<SigninPage />}>
+                  <ChatMessages />
                 </Protected>
               }
             />

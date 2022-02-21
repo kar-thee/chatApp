@@ -22,7 +22,7 @@ const Trial2 = () => {
           </Avatar>
         </IconButton>
       </Box>
-      <GroupProfileImg />
+      {/* <GroupProfileImg /> */}
     </>
   );
 };

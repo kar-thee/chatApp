@@ -8,7 +8,13 @@ const NavComponent = ({ title, iconComponent, href }) => {
   return (
     <>
       <Box
-        sx={{ my: 3, py: 2, cursor: "pointer", mx: "auto" }}
+        sx={{
+          my: 3,
+          py: 2,
+          cursor: "pointer",
+          mx: "auto",
+          ":hover": { backgroundColor: "#80d8ff" },
+        }}
         onClick={() => navigate(href)}
       >
         <Tooltip title={title}>

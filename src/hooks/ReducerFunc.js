@@ -24,6 +24,12 @@ const ReducerFunc = (state, actionObj) => {
     case "sidebarViewOff": {
       return { ...state, sideBarView: false };
     }
+    case "chatBoxOn": {
+      return { ...state, chatBoxId: actionObj.payLoad.id, chatBoxActive: true };
+    }
+    case "chatBoxOff": {
+      return { ...state, chatBoxId: "", chatBoxActive: false };
+    }
     default: {
       return state;
     }
