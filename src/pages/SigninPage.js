@@ -7,6 +7,8 @@ import useDispatchFunc from "../hooks/useDispatchFunc";
 
 import SigninComponent from "../components/public/SigninComponent";
 
+import Loader from "../helpers/Loader";
+
 const SigninPage = () => {
   const initialStateValues = {
     email: "",
@@ -102,6 +104,9 @@ const SigninPage = () => {
         togglePwdVisibility={togglePwdVisibility}
         submitHandler={submitHandler}
       />
+      <>
+        <Loader />
+      </>
     </>
   );
 };

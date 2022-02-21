@@ -1,8 +1,8 @@
 import { CssBaseline } from "@mui/material";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+
 import AppProvider from "./context/AppProvider";
-import Loader from "./helpers/Loader";
 import Protected from "./helpers/Protected";
 import ChatLayout from "./pages/chat/ChatLayout";
 import HomePage from "./pages/HomePage";
@@ -11,6 +11,7 @@ import SignupPage from "./pages/SignupPage";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import Trial from "./components/chat/chatSidebar/Trial1";
 import Trial2 from "./components/chat/chatSidebar/Trial2";
 
@@ -64,9 +65,6 @@ const App = () => {
           draggable
           pauseOnHover
         />
-        <>
-          <Loader />
-        </>
       </AppProvider>
     </>
   );

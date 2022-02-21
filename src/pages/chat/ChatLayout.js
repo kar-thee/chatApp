@@ -40,10 +40,11 @@ const ChatLayout = () => {
         {/* this will be chatBox */}
         <Grid
           item
-          xs={sideBarView ? 0 : 10}
+          xs={10}
           sm={6.5}
           md={7}
           lg={7.5}
+          sx={{ display: { xs: sideBarView ? "none" : "unset", sm: "unset" } }}
           maxHeight="10vh"
         >
           <ChatBoxPage />
@@ -52,10 +53,11 @@ const ChatLayout = () => {
         {/* this will be Sidebar */}
         <Grid
           item
-          xs={sideBarView ? 10 : 0}
+          xs={10}
           sm={3.5}
           md={3}
           lg={3}
+          sx={{ display: { xs: sideBarView ? "unset" : "none", sm: "unset" } }}
           maxHeight="100vh"
         >
           <ChatSideBarPage />

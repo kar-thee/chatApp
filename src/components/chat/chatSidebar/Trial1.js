@@ -1,7 +1,16 @@
+import { Box, Typography } from "@mui/material";
 import React from "react";
+import MiniLoader from "../../../helpers/MiniLoader";
+import UserProfileImg from "../../../helpers/UserProfileImg";
 
 const Trial = () => {
-  return <div>Trial component1</div>;
+  return (
+    <>
+      <Typography variant="h1">Hello</Typography>
+      <UserProfileImg />
+      <MiniLoader />
+    </>
+  );
 };
 
 export default Trial;

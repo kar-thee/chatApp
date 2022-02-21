@@ -48,15 +48,15 @@ const AvatarComponent = () => {
         >
           <MenuItem>
             <ListItemIcon>
-              <PersonIcon />
+              <PersonIcon sx={{ color: "#039be5" }} />
             </ListItemIcon>
-            <ListItemText>Profile</ListItemText>
+            <ListItemText sx={{ color: "#039be5" }}>Profile</ListItemText>
           </MenuItem>
           <MenuItem>
             <ListItemIcon>
-              <LogoutIcon />
+              <LogoutIcon sx={{ color: "#039be5" }} />
             </ListItemIcon>
-            <ListItemText>Logout</ListItemText>
+            <ListItemText sx={{ color: "#039be5" }}>Logout</ListItemText>
           </MenuItem>
         </Menu>
       </Box>

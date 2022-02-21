@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -7,11 +7,15 @@ const ChatSideBarPage = () => {
     <>
       <Box
         sx={{
-          backgroundColor: "yellow",
+          // backgroundColor: "#4fc3f7",
+          backgroundColor: "#e1f5fe",
           height: "100vh",
+          border: "0.5px solid #03a9f4",
         }}
       >
-        <Outlet />
+        <Container disableGutters sx={{ px: { xs: 0.5, md: 1 } }}>
+          <Outlet />
+        </Container>
       </Box>
     </>
   );

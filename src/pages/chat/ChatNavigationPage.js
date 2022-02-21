@@ -8,7 +8,13 @@ import chatNavItems from "../../helpers/chatNavItems";
 const ChatNavigationPage = () => {
   return (
     <>
-      <Box sx={{ backgroundColor: "#e1f5fe", minHeight: "100vh" }}>
+      <Box
+        sx={{
+          backgroundColor: "#e1f5fe",
+          border: "0.5px solid #03a9f4",
+          minHeight: "100vh",
+        }}
+      >
         <Toolbar sx={{ justifyContent: { xs: "center", lg: "initial" } }}>
           <Stack>
             {/* NavItems Component */}

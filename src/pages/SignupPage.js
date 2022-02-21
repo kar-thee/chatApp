@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import useDispatchFunc from "../hooks/useDispatchFunc";
 import SignupComponent from "../components/public/SignupComponent";
 
+import Loader from "../helpers/Loader";
+
 const SignupPage = () => {
   const initialStateValues = {
     name: "",
@@ -104,6 +106,9 @@ const SignupPage = () => {
         togglePwdVisibility={togglePwdVisibility}
         submitHandler={submitHandler}
       />
+      <>
+        <Loader />
+      </>
     </>
   );
 };
