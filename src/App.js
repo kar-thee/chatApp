@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Trial from "./components/chat/chatSidebar/Trial1";
 import Trial2 from "./components/chat/chatSidebar/Trial2";
 import ChatMessages from "./components/chat/chatSidebar/Messages/ChatMessages";
+import UserProfile from "./components/chat/profiles/UserProfile";
 
 const App = () => {
   return (
@@ -35,6 +36,15 @@ const App = () => {
               </Protected>
             }
           >
+            <Route
+              path=""
+              element={
+                <Protected redirect={<SigninPage />}>
+                  <ChatMessages />
+                </Protected>
+              }
+            />
+
             <Route
               path="trial1"
               element={
@@ -59,15 +69,23 @@ const App = () => {
                 </Protected>
               }
             />
+            <Route
+              path="profile/:userId"
+              element={
+                <Protected redirect={<SigninPage />}>
+                  <UserProfile />
+                </Protected>
+              }
+            />
           </Route>
 
           <Route path="*" element={<HomePage />} />
         </Routes>
         <ToastContainer
           position="top-center"
-          autoClose={5000}
+          autoClose={2000}
           hideProgressBar={false}
-          newestOnTop={false}
+          newestOnTop={true}
           closeOnClick
           rtl={false}
           pauseOnFocusLoss

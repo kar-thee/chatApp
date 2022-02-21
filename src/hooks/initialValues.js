@@ -5,6 +5,7 @@ const initialValues = {
   sideBarView: false,
   chatBoxId: "",
   chatBoxActive: false,
+  chatBoxLoading: false,
 };
 
 export default initialValues;

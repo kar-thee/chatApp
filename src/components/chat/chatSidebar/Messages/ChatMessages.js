@@ -15,8 +15,8 @@ const ChatMessages = () => {
   const [dispatch] = useDispatchFunc();
 
   useEffect(() => {
+    dispatch({ type: "sidebarViewOn" });
     (async () => {
-      dispatch({ type: "sidebarViewOn" });
       dispatch({ type: "loadingStart" });
       const response = await UserChatsApiCall(userInfo.id, token);
       dispatch({ type: "loadingStop" });

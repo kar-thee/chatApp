@@ -12,11 +12,16 @@ import React, { useState } from "react";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
+
 import useStateValFunc from "../../../hooks/useStateValFunc";
+import useDispatchFunc from "../../../hooks/useDispatchFunc";
+import { useNavigate } from "react-router-dom";
 
 const AvatarComponent = () => {
   const [anchorEl, setAnchorEl] = useState();
   const [{ userInfo }] = useStateValFunc();
+  const [dispatch] = useDispatchFunc();
+  const navigate = useNavigate();
 
   const handleAnchorElClick = (ev) => {
     setAnchorEl(ev.currentTarget);
@@ -24,6 +29,10 @@ const AvatarComponent = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const profileClickHandler = () => {
+    navigate(`profile/${userInfo.id}`);
   };
   return (
     <>
@@ -46,13 +55,13 @@ const AvatarComponent = () => {
             horizontal: "left",
           }}
         >
-          <MenuItem>
+          <MenuItem onClick={() => profileClickHandler()}>
             <ListItemIcon>
               <PersonIcon sx={{ color: "#039be5" }} />
             </ListItemIcon>
             <ListItemText sx={{ color: "#039be5" }}>Profile</ListItemText>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => dispatch({ type: "signout" })}>
             <ListItemIcon>
               <LogoutIcon sx={{ color: "#039be5" }} />
             </ListItemIcon>

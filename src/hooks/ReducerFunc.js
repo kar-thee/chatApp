@@ -30,6 +30,13 @@ const ReducerFunc = (state, actionObj) => {
     case "chatBoxOff": {
       return { ...state, chatBoxId: "", chatBoxActive: false };
     }
+    case "chatLoadingStart": {
+      return { ...state, chatBoxLoading: true };
+    }
+    case "chatLoadingStop": {
+      return { ...state, chatBoxLoading: false };
+    }
+
     default: {
       return state;
     }

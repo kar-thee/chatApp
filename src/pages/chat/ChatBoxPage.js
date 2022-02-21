@@ -1,5 +1,6 @@
 import { Box, Container } from "@mui/material";
 import React from "react";
+import ChatConversations from "../../components/chat/chatSidebar/conversations/ChatConversations";
 
 const ChatBoxPage = () => {
   return (
@@ -14,6 +15,7 @@ const ChatBoxPage = () => {
       >
         <Container disableGutters sx={{ px: { xs: 1, md: 2 } }}>
           here chatbox
+          <ChatConversations />
         </Container>
       </Box>
     </>

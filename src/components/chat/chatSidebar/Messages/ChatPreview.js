@@ -4,22 +4,34 @@ import DateTimeGetter from "../../../../helpers/DateTimeGetter";
 import ProfileImgs from "../../../../helpers/ProfileImgs";
 
 import useDispatchFunc from "../../../../hooks/useDispatchFunc";
+import useStateValFunc from "../../../../hooks/useStateValFunc";
 
 const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
   const [dispatch] = useDispatchFunc();
+  const [{ chatBoxId, chatBoxActive }] = useStateValFunc();
 
   const FetchConversations = (id) => {
-    dispatch({ type: "fetchConversation", payLoad: { id } });
+    dispatch({ type: "chatBoxOn", payLoad: { id } });
+    dispatch({ type: "sidebarViewOn" });
   };
 
   return (
     <>
       <Box
-        sx={{
-          pb: 0.5,
-          cursor: "pointer",
-          "& :hover": { backgroundColor: "#80d8ff" },
-        }}
+        sx={
+          chatBoxActive && chatBoxId === chatId
+            ? {
+                pb: 0.5,
+                cursor: "pointer",
+                "& :hover": { backgroundColor: "#80d8ff" },
+                backgroundColor: "#80d8ff",
+              }
+            : {
+                pb: 0.5,
+                cursor: "pointer",
+                "& :hover": { backgroundColor: "#80d8ff" },
+              }
+        }
         onClick={() => FetchConversations(chatId)}
       >
         <Stack direction="row" spacing={2} alignItems="center">
