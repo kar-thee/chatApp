@@ -19,6 +19,7 @@ const UserProfile = () => {
   const [dispatch] = useDispatchFunc();
 
   useEffect(() => {
+    dispatch({ type: "sidebarViewOn" });
     (async () => {
       dispatch({ type: "loadingStart" });
       const response = await UserProfileApiCall(userId, token);
@@ -30,6 +31,10 @@ const UserProfile = () => {
         toast.error(response.data.msg);
       }
     })();
+
+    return () => {
+      dispatch({ type: "sidebarViewOff" });
+    };
   }, [dispatch, token, userId]);
 
   if (loadingState) {
@@ -63,7 +68,7 @@ const UserProfile = () => {
         justifyContent="center"
         alignItems="space-between"
       >
-        <Stack direction="row" spacing={3} sx={{ pl: 1 }}>
+        <Stack direction="row" spacing={3} sx={{ pl: 1, alignItems: "center" }}>
           <Box>
             <FaceIcon sx={{ color: "#039be5" }} fontSize="large" />
           </Box>

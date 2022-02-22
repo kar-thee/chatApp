@@ -1,10 +1,18 @@
 import { Avatar, Box, IconButton } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import GroupProfileImg from "../../../helpers/GroupProfileImg";
 
 import GroupsIcon from "@mui/icons-material/Groups";
 import PersonIcon from "@mui/icons-material/Person";
+
+import useDispatchFunc from "../../../hooks/useDispatchFunc";
+
 const Trial2 = () => {
+  const [dispatch] = useDispatchFunc();
+
+  useEffect(() => {
+    dispatch({ type: "sidebarViewOn" });
+  }, [dispatch]);
   return (
     <>
       Trial2
@@ -22,7 +30,7 @@ const Trial2 = () => {
           </Avatar>
         </IconButton>
       </Box>
-      {/* <GroupProfileImg /> */}
+      <GroupProfileImg />
     </>
   );
 };

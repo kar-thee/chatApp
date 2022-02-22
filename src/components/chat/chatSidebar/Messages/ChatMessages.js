@@ -27,6 +27,7 @@ const ChatMessages = () => {
         toast.error(response.data.msg);
       }
     })();
+
     return () => {
       dispatch({ type: "sidebarViewOff" });
     };

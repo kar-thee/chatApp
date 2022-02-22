@@ -12,7 +12,7 @@ const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
 
   const FetchConversations = (id) => {
     dispatch({ type: "chatBoxOn", payLoad: { id } });
-    dispatch({ type: "sidebarViewOn" });
+    dispatch({ type: "sidebarViewOff" });
   };
 
   return (

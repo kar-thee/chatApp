@@ -4,15 +4,19 @@ import useDispatchFunc from "../../../../hooks/useDispatchFunc";
 import { toast } from "react-toastify";
 import ChatMessagesApiCall from "../../../../apis/chats/ChatMessagesApiCall";
 import MiniLoader from "../../../../helpers/MiniLoader";
+import { useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 
 const ChatConversations = () => {
   const [messagesState, setMessagesState] = useState("");
-  const [{ token, chatBoxId, chatBoxActive, chatBoxLoading }] =
+  const [{ token, chatBoxId, chatBoxActive, chatBoxLoading, sideBarView }] =
     useStateValFunc();
   const [dispatch] = useDispatchFunc();
 
+  const theme = useTheme();
+  const mobileView = useMediaQuery(theme.breakpoints.down("md"));
+
   useEffect(() => {
-    dispatch({ type: "sidebarViewOn" });
     if (chatBoxActive) {
       (async () => {
         dispatch({ type: "chatLoadingStart" });
@@ -26,11 +30,22 @@ const ChatConversations = () => {
         }
       })();
     }
-
-    return () => {
-      dispatch({ type: "sidebarViewOff" });
-    };
   }, [chatBoxActive, chatBoxId, dispatch, token]);
+
+  useEffect(() => {
+    // settingSidebarViewOff in mobileView to get only Conversations onScreen
+    // dispatch({ type: "sidebarViewOff" });
+
+    // here for mobile view ->do cleanup for not highlighting msgBox and unnecessary socket msg delivery
+    if (
+      chatBoxActive &&
+      chatBoxId !== "" &&
+      sideBarView === true &&
+      mobileView === true
+    ) {
+      dispatch({ type: "chatBoxOff" });
+    }
+  }, [chatBoxActive, chatBoxId, dispatch, mobileView, sideBarView]);
 
   if (chatBoxLoading) {
     return (

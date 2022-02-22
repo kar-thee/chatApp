@@ -9,6 +9,7 @@ import ChatSideBarPage from "./ChatSideBarPage";
 
 const ChatLayout = () => {
   const [{ sideBarView }] = useStateValFunc();
+
   // const [dispatch] = useDispatchFunc();
 
   // // sidebarView handling in mobileview
@@ -34,10 +35,10 @@ const ChatLayout = () => {
         <Grid
           item
           xs={10}
-          sm={6.5}
+          // sm={6.5}
           md={7}
           lg={7.5}
-          sx={{ display: { xs: sideBarView ? "none" : "unset", sm: "unset" } }}
+          sx={{ display: { xs: sideBarView ? "none" : "unset", md: "unset" } }}
           maxHeight="10vh"
         >
           <ChatBoxPage />
@@ -47,10 +48,10 @@ const ChatLayout = () => {
         <Grid
           item
           xs={10}
-          sm={3.5}
+          // sm={3.5}
           md={4}
           lg={3}
-          sx={{ display: { xs: sideBarView ? "unset" : "none", sm: "unset" } }}
+          sx={{ display: { xs: sideBarView ? "unset" : "none", md: "unset" } }}
           maxHeight="100vh"
         >
           <ChatSideBarPage />

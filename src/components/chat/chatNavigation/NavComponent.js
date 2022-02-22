@@ -2,8 +2,17 @@ import { Box, Divider, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import useDispatchFunc from "../../../hooks/useDispatchFunc";
+
 const NavComponent = ({ title, iconComponent, href }) => {
   const navigate = useNavigate();
+  const [dispatch] = useDispatchFunc();
+
+  const onClickHandler = (to) => {
+    // here to is the href got from props via onCLick
+    dispatch({ type: "sidebarViewOn" });
+    navigate(to);
+  };
 
   return (
     <>
@@ -15,7 +24,7 @@ const NavComponent = ({ title, iconComponent, href }) => {
           mx: "auto",
           ":hover": { backgroundColor: "#80d8ff" },
         }}
-        onClick={() => navigate(href)}
+        onClick={() => onClickHandler(href)}
       >
         <Tooltip title={title}>
           <IconButton>{iconComponent}</IconButton>
