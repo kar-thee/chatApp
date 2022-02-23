@@ -27,6 +27,7 @@ const ChatNavigationPage = () => {
                 title={navObj.title}
                 iconComponent={navObj.iconComponent}
                 href={navObj.href}
+                tooltipTitle={navObj.tooltipTitle}
                 key={i}
               />
             ))}

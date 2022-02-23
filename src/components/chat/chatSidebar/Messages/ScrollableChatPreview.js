@@ -7,7 +7,7 @@ const ScrollableChatPreview = ({ chatArray }) => {
     <>
       <Box
         sx={
-          chatArray.length > 5 ? { maxHeight: "90vh", overflowY: "scroll" } : {}
+          chatArray.length > 6 ? { maxHeight: "90vh", overflowY: "scroll" } : {}
         }
       >
         {chatArray.map((chat) => (

@@ -1,7 +1,7 @@
 import { CssBaseline } from "@mui/material";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-
+import "./App.css";
 import AppProvider from "./context/AppProvider";
 import Protected from "./helpers/Protected";
 import ChatLayout from "./pages/chat/ChatLayout";

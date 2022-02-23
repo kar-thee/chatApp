@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import useStateValFunc from "../../../../hooks/useStateValFunc";
-import useDispatchFunc from "../../../../hooks/useDispatchFunc";
+import useStateValFunc from "../../../hooks/useStateValFunc";
+import useDispatchFunc from "../../../hooks/useDispatchFunc";
 import { toast } from "react-toastify";
-import ChatMessagesApiCall from "../../../../apis/chats/ChatMessagesApiCall";
-import MiniLoader from "../../../../helpers/MiniLoader";
+import ChatMessagesApiCall from "../../../apis/chats/ChatMessagesApiCall";
+import MiniLoader from "../../../helpers/MiniLoader";
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
+import ChatBoxTitle from "./ChatBoxTitle";
+import ChatBoxComponent from "./ChatBoxComponent";
 
 const ChatConversations = () => {
   const [messagesState, setMessagesState] = useState("");
+  const [chatBoxInfo, setChatBoxInfo] = useState("");
+
   const [{ token, chatBoxId, chatBoxActive, chatBoxLoading, sideBarView }] =
     useStateValFunc();
   const [dispatch] = useDispatchFunc();
@@ -24,7 +28,9 @@ const ChatConversations = () => {
         dispatch({ type: "chatLoadingStop" });
         if (response.data.type === "success") {
           toast.success(response.data.msg);
+          // storing chat msgs and chatBoxInfo in states
           setMessagesState(response.data.chatMessages);
+          setChatBoxInfo(response.data.chatBoxInfo);
         } else {
           toast.error(response.data.msg);
         }
@@ -55,18 +61,25 @@ const ChatConversations = () => {
     );
   }
 
-  if (chatBoxActive && chatBoxId !== "" && messagesState !== "") {
-    //HERE DISPLAY MESSAGES
+  if (
+    chatBoxActive &&
+    chatBoxId !== "" &&
+    messagesState !== "" &&
+    chatBoxInfo !== ""
+  ) {
+    //HERE DISPLAY MESSAGES only if state has values and chatBoxActive is true
     return (
       <>
-        <p>{JSON.stringify(messagesState)}</p>
+        <ChatBoxTitle chatBoxInfo={chatBoxInfo} />
+        <ChatBoxComponent />
       </>
     );
   }
 
   return (
+    // here display "no chat selected/Active"
     <>
-      <p>No chat Active</p>
+      <div>No chat Active</div>
     </>
   );
 };

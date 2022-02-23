@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import useDispatchFunc from "../../../hooks/useDispatchFunc";
 
-const NavComponent = ({ title, iconComponent, href }) => {
+const NavComponent = ({ title, iconComponent, href, tooltipTitle }) => {
   const navigate = useNavigate();
   const [dispatch] = useDispatchFunc();
 
@@ -26,7 +26,7 @@ const NavComponent = ({ title, iconComponent, href }) => {
         }}
         onClick={() => onClickHandler(href)}
       >
-        <Tooltip title={title}>
+        <Tooltip title={tooltipTitle}>
           <IconButton>{iconComponent}</IconButton>
         </Tooltip>
         <Typography
