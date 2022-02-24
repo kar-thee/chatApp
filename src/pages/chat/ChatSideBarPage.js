@@ -13,7 +13,7 @@ const ChatSideBarPage = () => {
           border: "0.5px solid #03a9f4",
         }}
       >
-        <Container disableGutters sx={{ px: { xs: 0.5 } }}>
+        <Container disableGutters>
           <Outlet />
         </Container>
       </Box>

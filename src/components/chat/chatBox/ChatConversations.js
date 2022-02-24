@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import ChatMessagesApiCall from "../../../apis/chats/ChatMessagesApiCall";
 import MiniLoader from "../../../helpers/MiniLoader";
 import { useTheme } from "@mui/material/styles";
-import { useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import ChatBoxTitle from "./ChatBoxTitle";
 import ChatBoxComponent from "./ChatBoxComponent";
+import ChatBoxTyper from "./ChatBoxTyper";
 
 const ChatConversations = () => {
   const [messagesState, setMessagesState] = useState("");
@@ -70,8 +71,11 @@ const ChatConversations = () => {
     //HERE DISPLAY MESSAGES only if state has values and chatBoxActive is true
     return (
       <>
-        <ChatBoxTitle chatBoxInfo={chatBoxInfo} />
-        <ChatBoxComponent />
+        <Box sx={{ maxHeight: "100vh", overflow: "hidden" }}>
+          <ChatBoxTitle chatBoxInfo={chatBoxInfo} />
+          <ChatBoxComponent chatMessages={messagesState} />
+          <ChatBoxTyper />
+        </Box>
       </>
     );
   }

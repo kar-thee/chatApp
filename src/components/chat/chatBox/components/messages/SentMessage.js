@@ -1,13 +1,15 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
 import React from "react";
+
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import DateTimeGetter from "../../../../../helpers/DateTimeGetter";
+import ChatBoxMsgTail from "../../../../../helpers/ChatBoxMsgTail";
 
 const SentMessage = ({ msg, userInfo }) => {
   //msg.sender._id === userInfo.id
+
   return (
     <>
       <Stack
-        key={msg._id}
         direction="row"
         justifyContent="flex-End"
         alignItems="flex-End"
@@ -29,8 +31,9 @@ const SentMessage = ({ msg, userInfo }) => {
             backgroundColor: "#80d8ff",
             maxWidth: { xs: "80%", md: "70%" },
             borderRadius: "10px",
-            mb: msg.sender._id === userInfo.id ? 2 : "",
-            mr: msg.sender._id === userInfo.id ? 1 : "",
+            borderEndEndRadius: "unset",
+            mb: 1,
+            mr: 0,
           }}
         >
           <Stack alignItems="flex-End">
@@ -40,6 +43,7 @@ const SentMessage = ({ msg, userInfo }) => {
             </Typography>
           </Stack>
         </Box>
+        <ChatBoxMsgTail type="out" />
       </Stack>
     </>
   );

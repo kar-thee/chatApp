@@ -22,12 +22,15 @@ const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
           chatBoxActive && chatBoxId === chatId
             ? {
                 pb: 0.5,
+                px: 1,
                 cursor: "pointer",
                 "& :hover": { backgroundColor: "#80d8ff" },
                 backgroundColor: "#80d8ff",
+                opacity: 0.9,
               }
             : {
                 pb: 0.5,
+                px: 1,
                 cursor: "pointer",
                 "& :hover": { backgroundColor: "#80d8ff" },
               }
