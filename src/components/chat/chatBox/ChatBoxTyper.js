@@ -9,9 +9,15 @@ import React, { useState } from "react";
 
 import SendIcon from "@mui/icons-material/Send";
 
-const ChatBoxTyper = () => {
+const ChatBoxTyper = ({ sendTypedMsg }) => {
   const [typedMsg, setTypedMsg] = useState("");
 
+  const submitHandler = () => {
+    if (typedMsg !== "" || typedMsg.length > 0) {
+      sendTypedMsg(typedMsg);
+      setTypedMsg("");
+    }
+  };
   return (
     <>
       {/* <Box>
@@ -39,7 +45,7 @@ const ChatBoxTyper = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton>
+                  <IconButton onClick={() => submitHandler()}>
                     <SendIcon sx={{ color: "#0277bd" }} />
                   </IconButton>
                   {/* <Button variant="contained" endIcon={<SendIcon />}>

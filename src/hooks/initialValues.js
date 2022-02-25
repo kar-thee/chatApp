@@ -6,6 +6,7 @@ const initialValues = {
   chatBoxId: "",
   chatBoxActive: false,
   chatBoxLoading: false,
+  newMsgAdded: false,
 };
 
 export default initialValues;

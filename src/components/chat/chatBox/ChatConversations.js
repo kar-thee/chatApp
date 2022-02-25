@@ -9,13 +9,15 @@ import { Box, useMediaQuery } from "@mui/material";
 import ChatBoxTitle from "./ChatBoxTitle";
 import ChatBoxComponent from "./ChatBoxComponent";
 import ChatBoxTyper from "./ChatBoxTyper";
+import CreateMsgApiCall from "../../../apis/chats/CreateMsgApiCall";
 
 const ChatConversations = () => {
   const [messagesState, setMessagesState] = useState("");
   const [chatBoxInfo, setChatBoxInfo] = useState("");
 
-  const [{ token, chatBoxId, chatBoxActive, chatBoxLoading, sideBarView }] =
-    useStateValFunc();
+  const [
+    { token, userInfo, chatBoxId, chatBoxActive, chatBoxLoading, sideBarView },
+  ] = useStateValFunc();
   const [dispatch] = useDispatchFunc();
 
   const theme = useTheme();
@@ -55,12 +57,39 @@ const ChatConversations = () => {
   }, [chatBoxActive, chatBoxId, dispatch, mobileView, sideBarView]);
 
   if (chatBoxLoading) {
+    // show loading component
     return (
       <>
         <MiniLoader />
       </>
     );
   }
+
+  // below func helps in sending msg to server and update the chatBoxMsgState
+  const sendTypedMsg = async (typedMsg) => {
+    //adding msg to available msg state
+    const msgObj = {
+      sender: {
+        _id: userInfo.id,
+      },
+      content: typedMsg,
+      createdAt: new Date().toISOString(),
+    };
+    setMessagesState((prev) => [...prev, msgObj]);
+
+    //sending msg to server
+    const body = {
+      chatBox: chatBoxId,
+      sender: userInfo.id,
+      content: typedMsg,
+    };
+    //here add smallLoader to indicate the msg sent is successful/failed -later
+    const response = await CreateMsgApiCall(body, token);
+    // if response successful,refresh chatPreview
+    if (response.data.type === "success") {
+      dispatch({ type: "newMsgAddedTrue" });
+    }
+  };
 
   if (
     chatBoxActive &&
@@ -74,7 +103,7 @@ const ChatConversations = () => {
         <Box sx={{ maxHeight: "100vh", overflow: "hidden" }}>
           <ChatBoxTitle chatBoxInfo={chatBoxInfo} />
           <ChatBoxComponent chatMessages={messagesState} />
-          <ChatBoxTyper />
+          <ChatBoxTyper sendTypedMsg={sendTypedMsg} />
         </Box>
       </>
     );

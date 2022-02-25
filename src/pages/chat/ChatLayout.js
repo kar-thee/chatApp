@@ -25,9 +25,9 @@ const ChatLayout = () => {
 
   return (
     <>
-      <Grid container>
+      <Grid container sx={{ maxWidth: "100vw", overflow: "hidden" }}>
         {/* this will be navigationBar */}
-        <Grid item xs={2} md={1} lg={1.5} maxHeight="100vh">
+        <Grid item xs={2} md={1} lg={1.5} xl={1.5} maxHeight="100vh">
           <ChatNavigationPage />
         </Grid>
 
@@ -38,6 +38,7 @@ const ChatLayout = () => {
           // sm={6.5}
           md={7}
           lg={7.5}
+          xl={7.5}
           sx={{ display: { xs: sideBarView ? "none" : "unset", md: "unset" } }}
           maxHeight="10vh"
         >
@@ -51,6 +52,7 @@ const ChatLayout = () => {
           // sm={3.5}
           md={4}
           lg={3}
+          xl={3}
           sx={{ display: { xs: sideBarView ? "unset" : "none", md: "unset" } }}
           maxHeight="100vh"
         >

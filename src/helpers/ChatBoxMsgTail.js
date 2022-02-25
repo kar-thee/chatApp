@@ -1,15 +1,7 @@
 import React from "react";
 
 const ChatBoxMsgTail = ({ type }) => {
-  const classVal = {
-    position: "absolute",
-    top: 0,
-    zIndex: 100,
-    display: "block",
-    width: "8px",
-    height: "13px",
-  };
-
+  // out for sent Msg
   if (type === "out") {
     return (
       <>
@@ -30,6 +22,7 @@ const ChatBoxMsgTail = ({ type }) => {
       </>
     );
   } else {
+    // in for received Msg
     return (
       <>
         <div style={{ marginTop: "3.5px" }}>

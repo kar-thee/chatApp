@@ -29,11 +29,15 @@ const ReceivedMessage = ({ msg, userInfo }) => {
           sx={{
             padding: "6px 7px 8px 9px",
             backgroundColor: "#80d8ff",
-            maxWidth: { xs: "80%", md: "70%" },
+            maxWidth: { xs: "90%", md: "70%" },
             borderRadius: "10px",
             borderStartStartRadius: "unset",
             mt: 1,
             ml: 0,
+            // this helps in text overflow
+            wordBreak: "break-word",
+            //this helps in preserving all new line and gaps
+            whiteSpace: "pre-wrap",
           }}
         >
           <Stack alignItems="flex-Start">

@@ -11,8 +11,23 @@ import { toast } from "react-toastify";
 
 const ChatMessages = () => {
   const [chatBoxState, setChatBoxArray] = useState([]);
-  const [{ token, userInfo, loadingState }] = useStateValFunc();
+  const [{ token, userInfo, loadingState, newMsgAdded }] = useStateValFunc();
   const [dispatch] = useDispatchFunc();
+
+  // this will ensure whenever newMsgAdded is changed will refresh the chatBoxState
+  useEffect(() => {
+    if (newMsgAdded) {
+      (async () => {
+        const response = await UserChatsApiCall(userInfo.id, token);
+        if (response.data.type === "success") {
+          setChatBoxArray(response.data.chatBoxes);
+          dispatch({ type: "newMsgAddedFalse" });
+        }
+        // setting newMsgAdded to false after setting the state (i.e refreshing)
+        dispatch({ type: "newMsgAddedFalse" });
+      })();
+    }
+  }, [dispatch, newMsgAdded, token, userInfo.id]);
 
   useEffect(() => {
     dispatch({ type: "sidebarViewOn" });

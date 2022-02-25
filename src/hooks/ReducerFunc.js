@@ -36,7 +36,13 @@ const ReducerFunc = (state, actionObj) => {
     case "chatLoadingStop": {
       return { ...state, chatBoxLoading: false };
     }
-
+    //this newMsgAdded will helps in re-render when new MsgAdded
+    case "newMsgAddedTrue": {
+      return { ...state, newMsgAdded: true };
+    }
+    case "newMsgAddedFalse": {
+      return { ...state, newMsgAdded: false };
+    }
     default: {
       return state;
     }

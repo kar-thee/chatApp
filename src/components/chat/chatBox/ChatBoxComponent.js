@@ -18,7 +18,11 @@ const ChatBoxComponent = ({ chatMessages }) => {
       >
         {chatMessages.map((msg) =>
           msg.sender._id === userInfo.id ? (
-            <SentMessage msg={msg} userInfo={userInfo} key={msg._id} />
+            <SentMessage
+              msg={msg}
+              userInfo={userInfo}
+              key={msg._id || msg.content}
+            />
           ) : (
             <ReceivedMessage msg={msg} userInfo={userInfo} key={msg._id} />
           )
