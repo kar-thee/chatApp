@@ -47,20 +47,36 @@ const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
                     {chatName}
                   </Typography>
                 </Box>
-                <Typography
-                  variant="overline"
-                  sx={{
-                    opacity: "0.5",
-                    color: "#01579b",
-                    display: { xs: "none", md: "unset" },
-                  }}
-                >
-                  <DateTimeGetter createdAt={lastMsg.createdAt} />
-                </Typography>
+                {lastMsg ? (
+                  <>
+                    <Typography
+                      variant="overline"
+                      sx={{
+                        opacity: "0.5",
+                        color: "#01579b",
+                        display: { xs: "none", md: "unset" },
+                      }}
+                    >
+                      <DateTimeGetter
+                        createdAt={lastMsg.createdAt || new Date()}
+                      />
+                    </Typography>{" "}
+                  </>
+                ) : (
+                  ""
+                )}
               </Stack>
               <Box sx={{ maxWidth: { xs: "150px", md: "200px" } }}>
-                <Typography sx={{ fontWeight: "500", opacity: "0.8" }} noWrap>
-                  {lastMsg.content}
+                <Typography
+                  sx={{
+                    fontWeight: "500",
+                    opacity: "0.8",
+                    //to give nice look if no lastMSg found
+                    minHeight: lastMsg ? "" : "1rem",
+                  }}
+                  noWrap
+                >
+                  {lastMsg ? lastMsg.content : ""}
                 </Typography>
               </Box>
             </Stack>

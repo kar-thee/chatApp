@@ -81,6 +81,7 @@ const App = () => {
 
           <Route path="*" element={<HomePage />} />
         </Routes>
+
         <ToastContainer
           position="top-center"
           autoClose={2000}

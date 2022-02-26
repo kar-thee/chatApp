@@ -1,16 +1,51 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import useStateValFunc from "../../hooks/useStateValFunc";
-// import useDispatchFunc from "../../hooks/useDispatchFunc";
+import useDispatchFunc from "../../hooks/useDispatchFunc";
+
+import { io } from "socket.io-client";
+
 import ChatNavigationPage from "./ChatNavigationPage";
 import ChatBoxPage from "./ChatBoxPage";
 import ChatSideBarPage from "./ChatSideBarPage";
 
 const ChatLayout = () => {
-  const [{ sideBarView }] = useStateValFunc();
+  const [{ sideBarView, socketObj, userInfo }] = useStateValFunc();
+  const [dispatch] = useDispatchFunc();
+  //we need a flag to check whether component mounted or not to solve operation
+  //on unmounted component
+  let isMountedRef = useRef(true);
 
-  // const [dispatch] = useDispatchFunc();
+  useEffect(() => {
+    // connect socket io server
+    const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN);
+    dispatch({
+      type: "socketConnected",
+      payLoad: { socketObj: socketConnection },
+    });
+
+    return () => {
+      // socketObj state is set to null
+      dispatch({ type: "socketDisConnected" });
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+
+    if (socketObj) {
+      socketObj.emit("saveUser", userInfo);
+    }
+
+    return () => {
+      // memory leaks no op blah blah blah..
+      if (isMountedRef.current && socketObj) {
+        socketObj.emit("removeUser", userInfo);
+      }
+      isMountedRef.current = false;
+    };
+  }, [isMountedRef, socketObj, userInfo]);
 
   // // sidebarView handling in mobileview
   // const setSideBarViewOn = () => {

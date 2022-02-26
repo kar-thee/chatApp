@@ -16,7 +16,15 @@ const ChatConversations = () => {
   const [chatBoxInfo, setChatBoxInfo] = useState("");
 
   const [
-    { token, userInfo, chatBoxId, chatBoxActive, chatBoxLoading, sideBarView },
+    {
+      token,
+      userInfo,
+      chatBoxId,
+      chatBoxActive,
+      chatBoxLoading,
+      sideBarView,
+      socketObj,
+    },
   ] = useStateValFunc();
   const [dispatch] = useDispatchFunc();
 
@@ -56,6 +64,24 @@ const ChatConversations = () => {
     }
   }, [chatBoxActive, chatBoxId, dispatch, mobileView, sideBarView]);
 
+  useEffect(() => {
+    if (!socketObj) {
+      return;
+    }
+    //to update msgState when new msg received
+    socketObj.on("receivedMsg", (receivedMsgObj) => {
+      const { msgObj, senderId, chatId } = receivedMsgObj;
+
+      // msgReceiver is not sender  && chatBox is active  && chatBoxId is same
+      if (senderId !== userInfo.id && chatBoxActive && chatId === chatBoxId) {
+        //now you can update the message state
+        setMessagesState((prev) => [...prev, msgObj]);
+        //here we update chatBox preview
+        dispatch({ type: "newMsgAddedTrue" });
+      }
+    });
+  }, [chatBoxActive, chatBoxId, dispatch, socketObj, userInfo.id]);
+
   if (chatBoxLoading) {
     // show loading component
     return (
@@ -65,17 +91,35 @@ const ChatConversations = () => {
     );
   }
 
+  //socketFunc to emit msg to socket server
+  const sendMsgToSocket = (sendingMsgObj) => {
+    socketObj.emit("sendMsg", sendingMsgObj);
+  };
+
   // below func helps in sending msg to server and update the chatBoxMsgState
   const sendTypedMsg = async (typedMsg) => {
     //adding msg to available msg state
     const msgObj = {
       sender: {
         _id: userInfo.id,
+        name: userInfo.name,
       },
       content: typedMsg,
       createdAt: new Date().toISOString(),
     };
     setMessagesState((prev) => [...prev, msgObj]);
+
+    //sending msg to socket
+    const sendingMsgObj = {
+      msgObj,
+      senderId: userInfo.id,
+      chatId: chatBoxId,
+      // this can be reused for group [find to filter]
+      receiverObj: chatBoxInfo.members.find(
+        (memberObj) => memberObj._id !== userInfo.id
+      ),
+    };
+    sendMsgToSocket(sendingMsgObj);
 
     //sending msg to server
     const body = {

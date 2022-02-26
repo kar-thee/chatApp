@@ -1,4 +1,5 @@
 const initialValues = {
+  socketObj: "",
   userInfo: "",
   token: "",
   loadingState: false,

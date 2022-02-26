@@ -24,7 +24,11 @@ const ChatBoxComponent = ({ chatMessages }) => {
               key={msg._id || msg.content}
             />
           ) : (
-            <ReceivedMessage msg={msg} userInfo={userInfo} key={msg._id} />
+            <ReceivedMessage
+              msg={msg}
+              userInfo={userInfo}
+              key={msg._id || msg.content}
+            />
           )
         )}
         {/* here we need to make a smooth scrolling to end of the chatBox */}
