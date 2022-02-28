@@ -21,13 +21,13 @@ const chatNavItems = () => {
       title: "Group",
       tooltipTitle: "Create GroupChat",
       iconComponent: <GroupAddIcon sx={{ color: "#039be5" }} />,
-      href: "trial1",
+      href: "creategroup",
     },
     {
       title: "Search",
       tooltipTitle: "Search Users",
       iconComponent: <PersonSearchIcon sx={{ color: "#039be5" }} />,
-      href: "trial2",
+      href: "searchusers",
     },
   ];
   return itemList;

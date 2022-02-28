@@ -12,6 +12,7 @@ import UserProfileImg from "../../../helpers/UserProfileImg";
 import FaceIcon from "@mui/icons-material/Face";
 import EmailIcon from "@mui/icons-material/Email";
 import ChatTitle from "../chatSidebar/ChatTitle";
+
 const UserProfile = () => {
   const [profileState, setProfileState] = useState();
   const { userId } = useParams();

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useStateValFunc from "../../../../hooks/useStateValFunc";
 import useDispatchFunc from "../../../../hooks/useDispatchFunc";
 import UserPreview from "./UserPreview";
+import { Box } from "@mui/material";
 
 const UsersOnline = () => {
   const [{ usersOnlineArray, socketObj, userInfo }] = useStateValFunc();
@@ -61,12 +62,14 @@ const UsersOnline = () => {
 
   return (
     <>
-      {/* {usersOnlineArray &&
+      <Box sx={{ maxHeight: "95vh", overflowY: "scroll" }}>
+        {/* {usersOnlineArray &&
         usersOnlineArray.length > 0 &&
         JSON.stringify(usersOnlineArray)} */}
-      {liveUsers.map((usersObj) => (
-        <UserPreview liveUsers={usersObj} key={usersObj.userId} />
-      ))}
+        {liveUsers.map((usersObj) => (
+          <UserPreview liveUsers={usersObj} key={usersObj.userId} />
+        ))}
+      </Box>
     </>
   );
 };

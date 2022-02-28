@@ -2,6 +2,7 @@ import { Badge, Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 import DateTimeGetter from "../../../../helpers/DateTimeGetter";
 import ProfileImgs from "../../../../helpers/ProfileImgs";
+import ProfileImgsGroup from "../../../../helpers/ProfileImgsGroup";
 
 import useDispatchFunc from "../../../../hooks/useDispatchFunc";
 import useStateValFunc from "../../../../hooks/useStateValFunc";
@@ -46,7 +47,7 @@ const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
         onClick={() => FetchConversations(chatId)}
       >
         <Stack direction="row" spacing={2} alignItems="center">
-          {isGroupChat ? "" : <ProfileImgs />}
+          {isGroupChat ? <ProfileImgsGroup/> : <ProfileImgs />}
           <Box sx={{ pb: 0.5, width: "100%" }}>
             <Stack spacing={1}>
               <Stack justifyContent="space-between" direction="row">

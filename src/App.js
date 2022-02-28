@@ -12,11 +12,12 @@ import SignupPage from "./pages/SignupPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Trial from "./components/chat/chatSidebar/Trial1";
-import Trial2 from "./components/chat/chatSidebar/Trial2";
 import ChatMessages from "./components/chat/chatSidebar/Messages/ChatMessages";
 import UserProfile from "./components/chat/profiles/UserProfile";
 import UsersOnline from "./components/chat/chatSidebar/OnlineUsers/UsersOnline";
+import SearchUsersView from "./components/chat/chatSidebar/SearchUsers/SearchUsersView";
+import CreateGroupView from "./components/chat/chatSidebar/CreateGroup/CreateGroupView";
+import GroupProfile from "./components/chat/profiles/GroupProfile";
 
 const App = () => {
   return (
@@ -47,18 +48,18 @@ const App = () => {
             />
 
             <Route
-              path="trial1"
+              path="creategroup"
               element={
                 <Protected redirect={<SigninPage />}>
-                  <Trial />
+                  <CreateGroupView />
                 </Protected>
               }
             />
             <Route
-              path="trial2"
+              path="searchusers"
               element={
                 <Protected redirect={<SigninPage />}>
-                  <Trial2 />
+                  <SearchUsersView />
                 </Protected>
               }
             />
@@ -83,6 +84,14 @@ const App = () => {
               element={
                 <Protected redirect={<SigninPage />}>
                   <UserProfile />
+                </Protected>
+              }
+            />
+            <Route
+              path="groupprofile/:groupId"
+              element={
+                <Protected redirect={<SigninPage />}>
+                  <GroupProfile />
                 </Protected>
               }
             />
