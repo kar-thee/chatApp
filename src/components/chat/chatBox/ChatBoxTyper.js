@@ -5,12 +5,15 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SendIcon from "@mui/icons-material/Send";
 
-const ChatBoxTyper = ({ sendTypedMsg }) => {
+import useDispatchFunc from "../../../hooks/useDispatchFunc";
+
+const ChatBoxTyper = ({ sendTypedMsg, chatBoxId }) => {
   const [typedMsg, setTypedMsg] = useState("");
+  const [dispatch] = useDispatchFunc();
 
   const submitHandler = () => {
     if (typedMsg !== "" || typedMsg.length > 0) {
@@ -18,6 +21,14 @@ const ChatBoxTyper = ({ sendTypedMsg }) => {
       setTypedMsg("");
     }
   };
+
+  useEffect(() => {
+    dispatch({
+      type: "chatNotificationsRemove",
+      payLoad: { chatId: chatBoxId },
+    });
+  }, [chatBoxId, dispatch]);
+
   return (
     <>
       {/* <Box>

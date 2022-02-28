@@ -1,11 +1,17 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import useStateValFunc from "../../../hooks/useStateValFunc";
 import ReceivedMessage from "./components/messages/ReceivedMessage";
 import SentMessage from "./components/messages/SentMessage";
 
 const ChatBoxComponent = ({ chatMessages }) => {
   const [{ userInfo }] = useStateValFunc();
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    scrollRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [chatMessages]);
+
   return (
     <>
       <Box
@@ -21,17 +27,22 @@ const ChatBoxComponent = ({ chatMessages }) => {
             <SentMessage
               msg={msg}
               userInfo={userInfo}
-              key={msg._id || msg.content}
+              key={
+                msg._id || `${msg.content},${msg.createdAt},${Math.random()}`
+              } //we required a unique key for msg sent by us
             />
           ) : (
             <ReceivedMessage
               msg={msg}
               userInfo={userInfo}
-              key={msg._id || msg.content}
+              key={
+                msg._id || `${msg.content},${msg.createdAt},${Math.random()}`
+              } //we required a unique key for msg from socket-io
             />
           )
         )}
         {/* here we need to make a smooth scrolling to end of the chatBox */}
+        <div ref={scrollRef}></div>
       </Box>
     </>
   );

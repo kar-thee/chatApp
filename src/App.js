@@ -16,6 +16,7 @@ import Trial from "./components/chat/chatSidebar/Trial1";
 import Trial2 from "./components/chat/chatSidebar/Trial2";
 import ChatMessages from "./components/chat/chatSidebar/Messages/ChatMessages";
 import UserProfile from "./components/chat/profiles/UserProfile";
+import UsersOnline from "./components/chat/chatSidebar/OnlineUsers/UsersOnline";
 
 const App = () => {
   return (
@@ -58,6 +59,14 @@ const App = () => {
               element={
                 <Protected redirect={<SigninPage />}>
                   <Trial2 />
+                </Protected>
+              }
+            />
+            <Route
+              path="userslive"
+              element={
+                <Protected redirect={<SigninPage />}>
+                  <UsersOnline />
                 </Protected>
               }
             />

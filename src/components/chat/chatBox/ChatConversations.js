@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
+
 import useStateValFunc from "../../../hooks/useStateValFunc";
 import useDispatchFunc from "../../../hooks/useDispatchFunc";
+
 import { toast } from "react-toastify";
+
 import ChatMessagesApiCall from "../../../apis/chats/ChatMessagesApiCall";
+import CreateMsgApiCall from "../../../apis/chats/CreateMsgApiCall";
+
 import MiniLoader from "../../../helpers/MiniLoader";
+
 import { useTheme } from "@mui/material/styles";
 import { Box, useMediaQuery } from "@mui/material";
+
 import ChatBoxTitle from "./ChatBoxTitle";
 import ChatBoxComponent from "./ChatBoxComponent";
 import ChatBoxTyper from "./ChatBoxTyper";
-import CreateMsgApiCall from "../../../apis/chats/CreateMsgApiCall";
 
 const ChatConversations = () => {
   const [messagesState, setMessagesState] = useState("");
@@ -33,6 +39,10 @@ const ChatConversations = () => {
 
   useEffect(() => {
     if (chatBoxActive) {
+      dispatch({
+        type: "chatNotificationsRemove",
+        payLoad: { chatId: chatBoxId },
+      });
       (async () => {
         dispatch({ type: "chatLoadingStart" });
         const response = await ChatMessagesApiCall(chatBoxId, token);
@@ -51,7 +61,7 @@ const ChatConversations = () => {
 
   useEffect(() => {
     // settingSidebarViewOff in mobileView to get only Conversations onScreen
-    // dispatch({ type: "sidebarViewOff" });
+    //dispatch({ type: "sidebarViewOff" });
 
     // here for mobile view ->do cleanup for not highlighting msgBox and unnecessary socket msg delivery
     if (
@@ -78,6 +88,17 @@ const ChatConversations = () => {
         setMessagesState((prev) => [...prev, msgObj]);
         //here we update chatBox preview
         dispatch({ type: "newMsgAddedTrue" });
+      }
+
+      // msgReceiver is not sender  && chatBox is inactive  && chatBoxId is same
+      if (senderId !== userInfo.id && chatBoxActive === false) {
+        //now you can give notifications
+
+        dispatch({ type: "newMsgAddedTrue" });
+        dispatch({
+          type: "chatNotificationsAdd",
+          payLoad: { chatId },
+        });
       }
     });
   }, [chatBoxActive, chatBoxId, dispatch, socketObj, userInfo.id]);
@@ -147,7 +168,10 @@ const ChatConversations = () => {
         <Box sx={{ maxHeight: "100vh", overflow: "hidden" }}>
           <ChatBoxTitle chatBoxInfo={chatBoxInfo} />
           <ChatBoxComponent chatMessages={messagesState} />
-          <ChatBoxTyper sendTypedMsg={sendTypedMsg} />
+          <ChatBoxTyper
+            sendTypedMsg={sendTypedMsg}
+            chatBoxId={chatBoxInfo.id}
+          />
         </Box>
       </>
     );

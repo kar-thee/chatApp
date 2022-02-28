@@ -61,6 +61,39 @@ const ReducerFunc = (state, actionObj) => {
       return { ...state, newMsgAdded: false };
     }
 
+    // indicate chatNotification when chatBox not active
+    case "chatNotificationsAdd": {
+      const { chatNotifications } = state;
+      //we are filtering to avoid duplicates
+      const updatedList = chatNotifications.filter(
+        (chatIdObj) => chatIdObj !== actionObj.payLoad.chatId
+      );
+
+      return {
+        ...state,
+        chatNotifications: [...updatedList, actionObj.payLoad.chatId],
+      };
+    }
+    case "chatNotificationsRemove": {
+      const { chatNotifications } = state;
+      const updatedList = chatNotifications.filter(
+        (chatIdObj) => chatIdObj !== actionObj.payLoad.chatId
+      );
+
+      return {
+        ...state,
+        chatNotifications: [...updatedList],
+      };
+    }
+
+    //get online users using socket io events
+    case "updateOnlineUsers": {
+      return {
+        ...state,
+        usersOnlineArray: [...actionObj.payLoad.onlineUsersArray],
+      };
+    }
+
     default: {
       return state;
     }

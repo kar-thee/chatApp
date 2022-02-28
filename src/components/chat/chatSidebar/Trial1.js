@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
 import MiniLoader from "../../../helpers/MiniLoader";
 import UserProfileImg from "../../../helpers/UserProfileImg";

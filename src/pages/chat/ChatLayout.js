@@ -41,11 +41,24 @@ const ChatLayout = () => {
     return () => {
       // memory leaks no op blah blah blah..
       if (isMountedRef.current && socketObj) {
+        //when component unmounts or logout fired
         socketObj.emit("removeUser", userInfo);
       }
       isMountedRef.current = false;
     };
-  }, [isMountedRef, socketObj, userInfo]);
+  }, [socketObj, userInfo]);
+
+  useEffect(() => {
+    if (socketObj) {
+      //this will store all usersOnline
+      socketObj.on("updatedOnlineUsers", (onlineUsersArray) => {
+        dispatch({
+          type: "updateOnlineUsers",
+          payLoad: { onlineUsersArray },
+        });
+      });
+    }
+  }, [dispatch, socketObj]);
 
   // // sidebarView handling in mobileview
   // const setSideBarViewOn = () => {

@@ -8,6 +8,8 @@ const initialValues = {
   chatBoxActive: false,
   chatBoxLoading: false,
   newMsgAdded: false,
+  chatNotifications: [],
+  usersOnlineArray: [],
 };
 
 export default initialValues;

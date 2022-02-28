@@ -15,7 +15,7 @@ const chatNavItems = () => {
       title: "Users",
       tooltipTitle: "Users Online",
       iconComponent: <WifiIcon sx={{ color: "#039be5" }} />,
-      href: "trial1",
+      href: "userslive",
     },
     {
       title: "Group",
