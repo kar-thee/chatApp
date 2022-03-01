@@ -13,7 +13,12 @@ const GroupChatTitle = ({ chatBoxInfo }) => {
 
   return (
     <>
-      <Box sx={{ backgroundColor: "#80d8ff", py: 0.5 }}>
+      <Box
+        sx={{
+          backgroundColor: "#80d8ff",
+          //  py: 0.5
+        }}
+      >
         <Stack
           direction="row"
           spacing={2}
@@ -24,7 +29,7 @@ const GroupChatTitle = ({ chatBoxInfo }) => {
           <IconButton onClick={() => GroupClickHandler()}>
             <ProfileImgsGroup />
           </IconButton>
-          <Box sx={{ pb: 0.5, width: "100%", pt: 0.5 }}>
+          <Box sx={{ py: 0.5, width: "100%" }}>
             <Stack spacing={1}>
               <Box sx={{ maxWidth: "220px" }}>
                 <Typography variant="h6" sx={{ fontWeight: "500" }} noWrap>

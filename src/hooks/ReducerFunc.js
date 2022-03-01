@@ -5,6 +5,7 @@ const ReducerFunc = (state, actionObj) => {
     // basic auth
     case "signin": {
       return {
+        ...state,
         token: actionObj.payLoad.token,
         userInfo: actionObj.payLoad.user,
       };
@@ -42,7 +43,7 @@ const ReducerFunc = (state, actionObj) => {
       return { ...state, chatBoxId: actionObj.payLoad.id, chatBoxActive: true };
     }
     case "chatBoxOff": {
-      return { ...state, chatBoxId: "", chatBoxActive: false };
+      return { ...state, chatBoxActive: false };
     }
 
     // chatLoadingStates - miniloader
@@ -65,9 +66,11 @@ const ReducerFunc = (state, actionObj) => {
     case "chatNotificationsAdd": {
       const { chatNotifications } = state;
       //we are filtering to avoid duplicates
-      const updatedList = chatNotifications.filter(
-        (chatIdObj) => chatIdObj !== actionObj.payLoad.chatId
-      );
+      const updatedList =
+        chatNotifications.length >= 0 &&
+        chatNotifications.filter(
+          (chatIdObj) => chatIdObj !== actionObj.payLoad.chatId
+        );
 
       return {
         ...state,
@@ -76,10 +79,12 @@ const ReducerFunc = (state, actionObj) => {
     }
     case "chatNotificationsRemove": {
       const { chatNotifications } = state;
-      const updatedList = chatNotifications.filter(
-        (chatIdObj) => chatIdObj !== actionObj.payLoad.chatId
-      );
-
+      const updatedList =
+        chatNotifications.length >= 0 &&
+        chatNotifications.filter(
+          (chatIdObj) => chatIdObj !== actionObj.payLoad.chatId
+        );
+      //updatedList not iterable bug
       return {
         ...state,
         chatNotifications: [...updatedList],

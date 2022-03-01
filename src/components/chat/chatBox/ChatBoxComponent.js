@@ -17,7 +17,7 @@ const ChatBoxComponent = ({ chatMessages }) => {
       <Box
         sx={{
           height: "80vh", //need to change based on typed text
-          maxHeight: "75vh",
+          maxHeight: "76vh",
           overflowY: "scroll",
           // border: "1px solid green",
         }}

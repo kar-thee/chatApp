@@ -18,7 +18,7 @@ const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
   };
 
   const notificationAvailable =
-    chatNotifications.length > 0
+    chatNotifications && chatNotifications.length > 0
       ? chatNotifications.find(
           (chatNotificationId) => chatNotificationId === chatId
         )
@@ -47,7 +47,7 @@ const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
         onClick={() => FetchConversations(chatId)}
       >
         <Stack direction="row" spacing={2} alignItems="center">
-          {isGroupChat ? <ProfileImgsGroup/> : <ProfileImgs />}
+          {isGroupChat ? <ProfileImgsGroup /> : <ProfileImgs />}
           <Box sx={{ pb: 0.5, width: "100%" }}>
             <Stack spacing={1}>
               <Stack justifyContent="space-between" direction="row">
@@ -89,12 +89,11 @@ const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
                 >
                   <Typography
                     sx={{
-                      fontWeight:
-                        notificationAvailable && !chatBoxActive ? "900" : "500", //900
+                      fontWeight: notificationAvailable ? "900" : "500", //900
                       opacity: "0.8",
                       //to give nice look if no lastMSg found
                       minHeight: lastMsg ? "" : "1rem",
-                      color: notificationAvailable && !chatBoxActive && "green", //""
+                      color: notificationAvailable && "green", //""
                     }}
                     noWrap
                   >
@@ -102,7 +101,7 @@ const ChatPreview = ({ lastMsg, chatName, isGroupChat, chatId }) => {
                   </Typography>
                 </Box>
                 {/* below thing helps in notifying */}
-                {notificationAvailable && !chatBoxActive && (
+                {notificationAvailable && (
                   <Box sx={{ px: 2 }}>
                     <Badge
                       anchorOrigin={{

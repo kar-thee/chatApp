@@ -12,7 +12,12 @@ const PrivateChatTitle = ({ chatBoxInfo }) => {
   };
   return (
     <>
-      <Box sx={{ backgroundColor: "#80d8ff", py: 0.5 }}>
+      <Box
+        sx={{
+          backgroundColor: "#80d8ff",
+          pb: 0.5,
+        }}
+      >
         <Stack
           direction="row"
           spacing={2}
@@ -23,8 +28,8 @@ const PrivateChatTitle = ({ chatBoxInfo }) => {
           <IconButton onClick={() => ProfileClickHandler()}>
             <ProfileImgs />
           </IconButton>
-          <Box sx={{ pb: 0.5, width: "100%" }}>
-            <Stack spacing={1}>
+          <Box sx={{ py: 0.5, width: "100%" }}>
+            <Stack spacing={0.5}>
               <Box sx={{ maxWidth: "100px" }}>
                 <Typography variant="h6" sx={{ fontWeight: "500" }} noWrap>
                   {chatName}

@@ -99,19 +99,18 @@ const App = () => {
 
           <Route path="*" element={<HomePage />} />
         </Routes>
-
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={true}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       </AppProvider>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };

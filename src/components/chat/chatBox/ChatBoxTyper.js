@@ -5,7 +5,7 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import SendIcon from "@mui/icons-material/Send";
 
@@ -21,13 +21,12 @@ const ChatBoxTyper = ({ sendTypedMsg, chatBoxId }) => {
       setTypedMsg("");
     }
   };
-
-  useEffect(() => {
+  const textBoxFocus = () => {
     dispatch({
       type: "chatNotificationsRemove",
       payLoad: { chatId: chatBoxId },
     });
-  }, [chatBoxId, dispatch]);
+  };
 
   return (
     <>
@@ -50,6 +49,7 @@ const ChatBoxTyper = ({ sendTypedMsg, chatBoxId }) => {
             name="chatTyper"
             value={typedMsg}
             onChange={(ev) => setTypedMsg(ev.target.value)}
+            onFocus={() => textBoxFocus()}
             multiline
             minRows={2}
             maxRows={5}

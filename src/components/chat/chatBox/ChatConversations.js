@@ -20,6 +20,7 @@ import ChatBoxTyper from "./ChatBoxTyper";
 const ChatConversations = () => {
   const [messagesState, setMessagesState] = useState("");
   const [chatBoxInfo, setChatBoxInfo] = useState("");
+  const [chatIdActive, setChatIdActive] = useState("");
 
   const [
     {
@@ -35,14 +36,11 @@ const ChatConversations = () => {
   const [dispatch] = useDispatchFunc();
 
   const theme = useTheme();
+  //this helps in changing sidebarView in mobile screens
   const mobileView = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     if (chatBoxActive) {
-      dispatch({
-        type: "chatNotificationsRemove",
-        payLoad: { chatId: chatBoxId },
-      });
       (async () => {
         dispatch({ type: "chatLoadingStart" });
         const response = await ChatMessagesApiCall(chatBoxId, token);
@@ -52,6 +50,7 @@ const ChatConversations = () => {
           // storing chat msgs and chatBoxInfo in states
           setMessagesState(response.data.chatMessages);
           setChatBoxInfo(response.data.chatBoxInfo);
+          setChatIdActive(response.data.chatBoxInfo.id);
         } else {
           toast.error(response.data.msg);
         }
@@ -80,28 +79,68 @@ const ChatConversations = () => {
     }
     //to update msgState when new msg received
     socketObj.on("receivedMsg", (receivedMsgObj) => {
-      const { msgObj, senderId, chatId } = receivedMsgObj;
+      const { senderId, chatId, msgObj } = receivedMsgObj;
 
-      // msgReceiver is not sender  && chatBox is active  && chatBoxId is same
-      if (senderId !== userInfo.id && chatBoxActive && chatId === chatBoxId) {
-        //now you can update the message state
-        setMessagesState((prev) => [...prev, msgObj]);
-        //here we update chatBox preview
-        dispatch({ type: "newMsgAddedTrue" });
-      }
+      const sendNotification = () => {
+        // msgReceiver is not sender  && chatBox is inactive
+        if (
+          senderId !== userInfo.id &&
+          (chatIdActive !== chatId || !chatIdActive)
+        ) {
+          //senderId !== userInfo.id &&
+          //now you can give notifications
+          dispatch({ type: "newMsgAddedTrue" });
+          dispatch({
+            type: "chatNotificationsAdd",
+            payLoad: { chatId },
+          });
+        }
+      };
+      sendNotification();
 
-      // msgReceiver is not sender  && chatBox is inactive  && chatBoxId is same
-      if (senderId !== userInfo.id && chatBoxActive === false) {
-        //now you can give notifications
-
-        dispatch({ type: "newMsgAddedTrue" });
-        dispatch({
-          type: "chatNotificationsAdd",
-          payLoad: { chatId },
-        });
+      const addMsgTochatBox = () => {
+        if (
+          senderId !== userInfo.id &&
+          chatBoxId === chatId &&
+          chatBoxActive &&
+          chatId === chatIdActive
+        ) {
+          setMessagesState((prevState) => {
+            //this is to avoid duplicate entries
+            let lastMsgObj = prevState[prevState.length - 1];
+            //if no chats available ->
+            if (lastMsgObj.length < 1) {
+              return prevState;
+            }
+            //this is to avoid duplicate entries
+            if (
+              lastMsgObj.content === msgObj.content &&
+              lastMsgObj.createdAt === msgObj.createdAt
+            ) {
+              return prevState;
+            }
+            //this is to prevent msg leak to other chatBox
+            return prevState.find(
+              (msgStateObj) => msgStateObj.chatBox === chatId
+            )
+              ? [...prevState, msgObj]
+              : prevState;
+          });
+          console.log("add msg");
+        }
+      };
+      if (chatBoxActive && chatId === chatBoxId) {
+        addMsgTochatBox();
       }
     });
-  }, [chatBoxActive, chatBoxId, dispatch, socketObj, userInfo.id]);
+  }, [
+    chatBoxActive,
+    chatBoxId,
+    chatIdActive,
+    dispatch,
+    socketObj,
+    userInfo.id,
+  ]);
 
   if (chatBoxLoading) {
     // show loading component
@@ -130,18 +169,6 @@ const ChatConversations = () => {
     };
     setMessagesState((prev) => [...prev, msgObj]);
 
-    //sending msg to socket
-    const sendingMsgObj = {
-      msgObj,
-      senderId: userInfo.id,
-      chatId: chatBoxId,
-      // this can be reused for group [find to filter]
-      receiverObj: chatBoxInfo.members.find(
-        (memberObj) => memberObj._id !== userInfo.id
-      ),
-    };
-    sendMsgToSocket(sendingMsgObj);
-
     //sending msg to server
     const body = {
       chatBox: chatBoxId,
@@ -152,6 +179,17 @@ const ChatConversations = () => {
     const response = await CreateMsgApiCall(body, token);
     // if response successful,refresh chatPreview
     if (response.data.type === "success") {
+      //sending msg to socket
+      const sendingMsgObj = {
+        msgObj,
+        senderId: userInfo.id,
+        chatId: chatBoxInfo.id,
+        // this can be reused for group [find to filter]
+        receiverObj: chatBoxInfo.members.find(
+          (memberObj) => memberObj._id !== userInfo.id
+        ),
+      };
+      sendMsgToSocket(sendingMsgObj);
       dispatch({ type: "newMsgAddedTrue" });
     }
   };
