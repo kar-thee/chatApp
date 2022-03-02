@@ -7,6 +7,8 @@ import useDispatchFunc from "../hooks/useDispatchFunc";
 import SignupComponent from "../components/public/SignupComponent";
 
 import Loader from "../helpers/Loader";
+import ChatTitle from "../components/chat/chatSidebar/ChatTitle";
+import useAuth from "../hooks/useAuth";
 
 const SignupPage = () => {
   const initialStateValues = {
@@ -25,6 +27,12 @@ const SignupPage = () => {
   const [errorState, setErrorState] = useState(initialErrorValues);
   const navigate = useNavigate();
   const [dispatch] = useDispatchFunc();
+  const [checkAuth] = useAuth();
+
+  useEffect(() => {
+    // if auth available navigate to chatApp
+    checkAuth() && navigate("/chatApp");
+  }, [checkAuth, navigate]);
 
   const validateFunc = useCallback(() => {
     const errorName = state.name.length > 2 ? false : true;
@@ -98,6 +106,10 @@ const SignupPage = () => {
 
   return (
     <>
+      <>
+        <ChatTitle title="Sign Up" />
+      </>
+
       <SignupComponent
         state={state}
         errorState={errorState}

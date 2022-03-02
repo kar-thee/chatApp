@@ -1,17 +1,11 @@
-import {
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 
-const CreateGroupForm = ({ usersList, createGroupFunc }) => {
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import CreateGroupMemberSelect from "./CreateGroupMemberSelect";
+import CreateGroupAdminSelect from "./CreateGroupAdminSelect";
+
+const CreateGroupForm = ({ usersList, createGroupFunc, userInfo }) => {
   const groupInfoInitialState = {
     members: [],
     adminUser: "",
@@ -26,7 +20,12 @@ const CreateGroupForm = ({ usersList, createGroupFunc }) => {
   const submitForm = () => {
     //here send state to parent component
     //to create group chat
-    createGroupFunc(groupInfo);
+    const membersArray = groupInfo.members;
+    //here using map func -> we get only id from each obj
+    let memberIdArray = membersArray.map((memberObj) => memberObj._id);
+
+    //updating the obj to send to server
+    createGroupFunc({ ...groupInfo, members: memberIdArray });
 
     //set to initial value
     setGroupInfo(groupInfoInitialState);
@@ -45,88 +44,48 @@ const CreateGroupForm = ({ usersList, createGroupFunc }) => {
     }
   };
 
-  console.log(groupInfo, "groupInfo");
-
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
-
-  const handleChangeForMembers = (event) => {
-    const {
-      target: { value },
-    } = event;
-    // On autofill we get a stringified value.
-    setGroupInfo((prev) => ({
-      ...prev,
-      ["members"]: typeof value === "string" ? value.split(",") : value,
-    }));
-  };
-
   return (
     <>
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { my: 3, px: 1 },
+          "& .MuiTextField-root": { my: 3 },
         }}
       >
         {/* group name */}
-        <TextField
-          variant="filled"
-          id="groupName"
-          name="groupName"
-          label="Group name"
-          value={groupInfo.groupName}
-          onChange={(ev) => handleChange(ev)}
-          fullWidth
-        />
+        <Box sx={{ p: 1 }}>
+          <TextField
+            id="groupName"
+            name="groupName"
+            placeholder="Group name"
+            value={groupInfo.groupName}
+            onChange={(ev) => handleChange(ev)}
+            fullWidth
+          />
+        </Box>
 
         {/* group members select */}
-        <Box sx={{ p: 1 }}>
-          <FormControl sx={{ my: 1, width: "100%" }}>
-            <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
-            <Select
-              labelId="demo-multiple-chip-label"
-              id="demo-multiple-chip"
-              multiple
-              fullWidth
-              value={groupInfo.members}
-              onChange={(ev) => handleChangeForMembers(ev)}
-              //   input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              //   renderValue={(selected) => (
-              //     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              //       {selected.map((value) => (
-              //         <Chip key={value} label={value} />
-              //       ))}
-              //     </Box>
-              //   )}
-              //   MenuProps={MenuProps}
-            >
-              {usersList &&
-                usersList.map((userObj) => (
-                  <MenuItem key={userObj._id} value={userObj._id}>
-                    {userObj.name}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-        </Box>
-        {/* group admin select */}
+        <CreateGroupMemberSelect
+          groupInfo={groupInfo}
+          handleChange={handleChange}
+          usersList={usersList}
+        />
+
+        {/* group admin select only after members selected first*/}
+        <CreateGroupAdminSelect
+          groupInfo={groupInfo}
+          handleChange={handleChange}
+          userInfo={userInfo}
+        />
 
         {/* submit button to create group */}
-        <Box sx={{ p: 1 }}>
+        <Box sx={{ p: 1, my: 3 }}>
           <Button
             variant="contained"
             fullWidth
             size="large"
             onClick={() => validateForm()}
+            startIcon={<GroupAddIcon />}
           >
             Create Group
           </Button>

@@ -28,7 +28,11 @@ const SigninComponent = ({
     <>
       <Container
         maxWidth="xs"
-        sx={{ border: "1px solid grey", py: 5, mt: { xs: "30%", md: "10%" } }}
+        sx={{
+          border: "1px solid grey",
+          py: 5,
+          mt: { xs: "20%", md: "10%" },
+        }}
       >
         <Box
           sx={{

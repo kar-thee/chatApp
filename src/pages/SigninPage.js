@@ -8,6 +8,8 @@ import useDispatchFunc from "../hooks/useDispatchFunc";
 import SigninComponent from "../components/public/SigninComponent";
 
 import Loader from "../helpers/Loader";
+import ChatTitle from "../components/chat/chatSidebar/ChatTitle";
+import useAuth from "../hooks/useAuth";
 
 const SigninPage = () => {
   const initialStateValues = {
@@ -24,6 +26,13 @@ const SigninPage = () => {
   const [errorState, setErrorState] = useState(initialErrorValues);
   const navigate = useNavigate();
   const [dispatch] = useDispatchFunc();
+
+  const [checkAuth] = useAuth();
+
+  useEffect(() => {
+    // if auth available navigate to chatApp
+    checkAuth() && navigate("/chatApp");
+  }, [checkAuth, navigate]);
 
   const validateFunc = useCallback(() => {
     // eslint-disable-next-line no-useless-escape
@@ -96,6 +105,10 @@ const SigninPage = () => {
 
   return (
     <>
+      {/* this is title */}
+      <>
+        <ChatTitle title="Sign In" />
+      </>
       <SigninComponent
         state={state}
         errorState={errorState}
