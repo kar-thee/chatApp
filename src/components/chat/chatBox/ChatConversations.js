@@ -82,12 +82,11 @@ const ChatConversations = () => {
       const { senderId, chatId, msgObj } = receivedMsgObj;
 
       const sendNotification = () => {
-        // msgReceiver is not sender  && chatBox is inactive
+        // msgReceiver is not sender
         if (
           senderId !== userInfo.id &&
           (chatIdActive !== chatId || !chatIdActive)
         ) {
-          //senderId !== userInfo.id &&
           //now you can give notifications
           dispatch({ type: "newMsgAddedTrue" });
           dispatch({
@@ -96,9 +95,11 @@ const ChatConversations = () => {
           });
         }
       };
+      //this will send notification when new msg received
       sendNotification();
 
       const addMsgTochatBox = () => {
+        //all these conditions helps in  avoiding unnecessary changes in rerender
         if (
           senderId !== userInfo.id &&
           chatBoxId === chatId &&
@@ -108,7 +109,7 @@ const ChatConversations = () => {
           setMessagesState((prevState) => {
             //this is to avoid duplicate entries
             let lastMsgObj = prevState[prevState.length - 1];
-            //if no chats available ->
+            //if no chats available -> //avoided by creating initial msgs in backend
             if (lastMsgObj.length < 1) {
               return prevState;
             }
@@ -119,17 +120,19 @@ const ChatConversations = () => {
             ) {
               return prevState;
             }
-            //this is to prevent msg leak to other chatBox
+            //this is to prevent msg leak to other chatBox if active
             return prevState.find(
               (msgStateObj) => msgStateObj.chatBox === chatId
             )
               ? [...prevState, msgObj]
               : prevState;
           });
-          console.log("add msg");
+          // console.log("add msg");
         }
       };
+      //chatBox active and chatId from socket event and chatBoxId state are same
       if (chatBoxActive && chatId === chatBoxId) {
+        //this will add msg to messageState in chatBox
         addMsgTochatBox();
       }
     });
@@ -175,7 +178,7 @@ const ChatConversations = () => {
       sender: userInfo.id,
       content: typedMsg,
     };
-    //here add smallLoader to indicate the msg sent is successful/failed -later
+    //here the msg is created in the server
     const response = await CreateMsgApiCall(body, token);
     // if response successful,refresh chatPreview
     if (response.data.type === "success") {
@@ -185,10 +188,11 @@ const ChatConversations = () => {
         senderId: userInfo.id,
         chatId: chatBoxInfo.id,
         // this can be reused for group [find to filter]
-        receiverObj: chatBoxInfo.members.find(
+        receiverObjArray: chatBoxInfo.members.filter(
           (memberObj) => memberObj._id !== userInfo.id
         ),
       };
+      //the below func will emit to socket
       sendMsgToSocket(sendingMsgObj);
       dispatch({ type: "newMsgAddedTrue" });
     }

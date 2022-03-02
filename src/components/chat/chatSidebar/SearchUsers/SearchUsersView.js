@@ -110,7 +110,7 @@ const SearchUsersView = () => {
           ))}
 
         {/* here display if no result found */}
-        {emptyVal ? (
+        {emptyVal || searchFoundArray.length < 1 ? (
           <>
             <h1>No Search results</h1>
           </>
