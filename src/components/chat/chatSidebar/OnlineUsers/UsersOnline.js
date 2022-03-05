@@ -13,17 +13,7 @@ const UsersOnline = () => {
 
   useEffect(() => {
     dispatch({ type: "sidebarViewOn" });
-    if (!socketObj) {
-      const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN, {
-        reconnectionDelay: 3000,
-        reconnectionDelayMax: 7000,
-        rememberUpgrade: true,
-      });
-      dispatch({
-        type: "socketConnected",
-        payLoad: { socketObj: socketConnection },
-      });
-    }
+
     if (socketObj) {
       //this will store all usersOnline
       socketObj.on("updatedOnlineUsers", (onlineUsersArray) => {
