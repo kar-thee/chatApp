@@ -4,6 +4,8 @@ import useDispatchFunc from "../../../../hooks/useDispatchFunc";
 import UserPreview from "./UserPreview";
 import { Box } from "@mui/material";
 
+import { io } from "socket.io-client";
+
 const UsersOnline = () => {
   const [{ usersOnlineArray, socketObj, userInfo }] = useStateValFunc();
   const [dispatch] = useDispatchFunc();
@@ -37,6 +39,21 @@ const UsersOnline = () => {
       setLiveUsers(users);
     }
   }, [userInfo.id, usersOnlineArray]);
+
+  useEffect(() => {
+    if (!usersOnlineArray || usersOnlineArray.length < 1 || !socketObj) {
+      // connect socket io server
+      const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN, {
+        forceNew: true,
+        transports: ["websocket"],
+      });
+      console.log("reconnecting socket.io[websockets]");
+      dispatch({
+        type: "socketConnected",
+        payLoad: { socketObj: socketConnection },
+      });
+    }
+  }, [dispatch, socketObj, usersOnlineArray]);
 
   //   useEffect(() => {
   //     //component will unmount
