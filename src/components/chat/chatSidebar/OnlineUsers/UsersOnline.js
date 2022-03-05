@@ -4,8 +4,6 @@ import useDispatchFunc from "../../../../hooks/useDispatchFunc";
 import UserPreview from "./UserPreview";
 import { Box } from "@mui/material";
 
-import { io } from "socket.io-client";
-
 const UsersOnline = () => {
   const [{ usersOnlineArray, socketObj, userInfo }] = useStateValFunc();
   const [dispatch] = useDispatchFunc();
