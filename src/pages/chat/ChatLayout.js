@@ -19,7 +19,11 @@ const ChatLayout = () => {
 
   useEffect(() => {
     // connect socket io server
-    const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN);
+    const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN, {
+      // reconnectionDelay: 3000,
+      // reconnectionDelayMax: 7000,
+      rememberUpgrade: true,
+    });
     dispatch({
       type: "socketConnected",
       payLoad: { socketObj: socketConnection },
