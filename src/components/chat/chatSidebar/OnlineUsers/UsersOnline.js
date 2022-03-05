@@ -15,17 +15,16 @@ const UsersOnline = () => {
     // connect socket io server when we come to this page...
     //so even if we disconnect from server because of polling sticky sessions,
     //this acts like a refreshing site so client reconnects...So win-win
-    if (!socketObj && usersOnlineArray.length < 1) {
-      const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN, {
-        // reconnectionDelay: 3000,
-        // reconnectionDelayMax: 7000,
-        // rememberUpgrade: true,
-      });
-      dispatch({
-        type: "socketConnected",
-        payLoad: { socketObj: socketConnection },
-      });
-    }
+
+    const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN, {
+      // reconnectionDelay: 3000,
+      // reconnectionDelayMax: 7000,
+      // rememberUpgrade: true,
+    });
+    dispatch({
+      type: "socketConnected",
+      payLoad: { socketObj: socketConnection },
+    });
   }, [dispatch, socketObj, usersOnlineArray]);
 
   useEffect(() => {
