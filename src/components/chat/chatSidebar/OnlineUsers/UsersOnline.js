@@ -4,10 +4,26 @@ import useDispatchFunc from "../../../../hooks/useDispatchFunc";
 import UserPreview from "./UserPreview";
 import { Box } from "@mui/material";
 
+import { io } from "socket.io-client";
+
 const UsersOnline = () => {
   const [{ usersOnlineArray, socketObj, userInfo }] = useStateValFunc();
   const [dispatch] = useDispatchFunc();
   const [liveUsers, setLiveUsers] = useState("");
+
+  useEffect(() => {
+    // connect socket io server
+    const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN);
+    dispatch({
+      type: "socketConnected",
+      payLoad: { socketObj: socketConnection },
+    });
+
+    return () => {
+      // socketObj state is set to null
+      dispatch({ type: "socketDisConnected" });
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch({ type: "sidebarViewOn" });
