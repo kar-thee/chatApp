@@ -21,6 +21,7 @@ const ChatLayout = () => {
     // connect socket io server
     const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN, {
       forceNew: true,
+      transports: ["websocket"],
     });
     dispatch({
       type: "socketConnected",
