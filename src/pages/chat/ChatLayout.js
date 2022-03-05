@@ -22,7 +22,7 @@ const ChatLayout = () => {
     const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN, {
       // reconnectionDelay: 3000,
       // reconnectionDelayMax: 7000,
-      rememberUpgrade: true,
+      // rememberUpgrade: true,
     });
     dispatch({
       type: "socketConnected",
