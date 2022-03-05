@@ -20,8 +20,8 @@ const ChatLayout = () => {
   useEffect(() => {
     // connect socket io server
     const socketConnection = io(process.env.REACT_APP_SERVER_DOMAIN, {
-      reconnectionDelay: 3000,
-      reconnectionDelayMax: 7000,
+      // reconnectionDelay: 3000,
+      // reconnectionDelayMax: 7000,
       rememberUpgrade: true,
     });
     dispatch({
